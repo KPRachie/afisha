@@ -10,7 +10,7 @@ def update_conservatory():
     conn = connect("coservatort.sqlite")
     URL = "https://www.mosconsv.ru/ru/concerts.aspx?start="
     a = 0
-    for j in range(32):
+    for j in range(1, 35):
         a = int(a)
         a = a + 1
         a = str(a)
