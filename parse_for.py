@@ -8,7 +8,7 @@ def update_philarmony():
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
     }
 
-    for i in range(9, 13):
+    for i in range(11, 13):
         conn = connect("coservatort.sqlite")
         answer = requests.get("https://meloman.ru/calendar/" + "?month=" + str(i), headers=headers)
         soup = BeautifulSoup(answer.text, 'html.parser')
@@ -21,13 +21,25 @@ def update_philarmony():
                     soup1 = BeautifulSoup(answer1.text)
                     title = soup1.find("h1")
                     title1 = title.text
-                    date = soup1.find_all("p")[2]
-                    date1 = date.text
-                    hall = soup1.find_all("p")[3]
-                    hall1 = hall.text
-                    song1 = soup1.find("div", {"class": "programme"})
+                    date = soup1.find_all("p")[1]
+                    date1 = date.text.split("\n")[2][26::]
+                    hall = soup1.find_all("p")[2]
+                    hall1 = hall.text[29::]
+                    song1 = soup1.find("div", {"class": "right-half programme selen"})
                     if song1:
                         song2 = song1.text
+                        index = song2.find("В программе:")
+                        song2 = song2[index::].replace("\n\n\n\n", '\n').replace("                     ", '\n').replace("\n\n\n \n", '\n').replace("\n\n", '\n')
+                        index2 = song2.find("Абонемент")
+                        if index2 != -1:
+                            song2 = song2[:index2]
+                        index3 = song2.find("Рекомендуем для детей")
+                        if index3 != -1:
+                            song2 = song2[:index3]
+                        index4 = song2.find("Купить билеты")
+                        if index4 != -1:
+                            song2 = song2[:index4]
+                        song2 = song2.replace("\n ", '\n')
                         if song2:
                             title = title1
                             hall = hall1

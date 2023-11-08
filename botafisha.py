@@ -31,8 +31,11 @@ def search(message):
         ["%{}%".format(query), "%{}%".format(query), "%{}%".format(query),
          "%{}%".format(query), "%{}%".format(query)])
     con = cursor.fetchall()
+    counter = 0
     for i in con:
-        bot.send_message(message.chat.id, ", ".join(i))
+        if counter < 5:
+            bot.send_message(message.chat.id, "\n\n".join(i))
+        counter += 1
     conn.commit()
     conn.close()
 
