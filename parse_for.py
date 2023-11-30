@@ -8,7 +8,7 @@ def update_philarmony():
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
     }
 
-    for i in range(11, 13):
+    for i in range(12, 13):
         conn = connect("coservatort.sqlite")
         answer = requests.get("https://meloman.ru/calendar/" + "?month=" + str(i), headers=headers)
         soup = BeautifulSoup(answer.text, 'html.parser')
@@ -21,10 +21,10 @@ def update_philarmony():
                     soup1 = BeautifulSoup(answer1.text)
                     title = soup1.find("h1")
                     title1 = title.text
-                    date = soup1.find_all("p")[1]
-                    date1 = date.text.split("\n")[2][26::]
-                    hall = soup1.find_all("p")[2]
-                    hall1 = hall.text[29::]
+                    date = soup1.find_all("p", {"class": "text size18"})[0]
+                    date1 = date.text[52::]
+                    hall = soup1.find_all("p", {"class": "text size18"})[1]
+                    hall1 = hall.text.replace("\n", "").replace("                            ", "")
                     song1 = soup1.find("div", {"class": "right-half programme selen"})
                     if song1:
                         song2 = song1.text
